@@ -23,7 +23,7 @@ import Dead from "./PlayerStates/Dead";
  */
 export const PlayerAnimations = {
     IDLE: "IDLE",
-    WALK: "WALK",
+    WALK: "RUNNING_RIGHT",
     JUMP: "JUMP",
 } as const
 
