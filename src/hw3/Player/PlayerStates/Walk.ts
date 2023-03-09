@@ -7,7 +7,14 @@ export default class Walk extends PlayerState {
 
 	onEnter(options: Record<string, any>): void {
 		this.parent.speed = this.parent.MIN_SPEED;
-        this.owner.animation.playIfNotAlready(PlayerAnimations.WALK);
+        if (!this.owner.animation.isPlaying(PlayerAnimations.TAKING_DAMAGE)) {
+            if (this.parent.inputDir.x.valueOf() > 0) {
+                this.owner.animation.play(PlayerAnimations.RUN_RIGHT, true);
+            } 
+            else if (this.parent.inputDir.x.valueOf() < 0) {
+                this.owner.animation.play(PlayerAnimations.RUN_LEFT, true); // my rock toes anit right
+            }
+        }
 	}
 
 	update(deltaT: number): void {

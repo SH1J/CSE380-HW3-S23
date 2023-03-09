@@ -6,7 +6,9 @@ import { HW3Controls } from "../../HW3Controls";
 export default class Idle extends PlayerState {
 
 	public onEnter(options: Record<string, any>): void {
-        this.owner.animation.play(PlayerAnimations.IDLE);
+        if (!this.owner.animation.isPlaying(PlayerAnimations.TAKING_DAMAGE)) {
+            this.owner.animation.playIfNotAlready(PlayerAnimations.IDLE, true);
+        }
 		this.parent.speed = this.parent.MIN_SPEED;
         this.parent.velocity.x = 0;
         this.parent.velocity.y = 0;

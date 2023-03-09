@@ -92,6 +92,8 @@ export default abstract class HW3Level extends Scene {
     protected jumpAudioKey: string;
     protected tileDestroyedAudioKey: string;
 
+    protected dyingKey: string;
+
     public constructor(viewport: Viewport, sceneManager: SceneManager, renderingManager: RenderingManager, options: Record<string, any>) {
         super(viewport, sceneManager, renderingManager, {...options, physics: {
             // TODO configure the collision groups and collision map
@@ -410,6 +412,18 @@ export default abstract class HW3Level extends Scene {
         this.player.addPhysics(new AABB(this.player.position.clone(), this.player.boundary.getHalfSize().clone()));
 
         // TODO - give the player their flip tween
+        this.player.tweens.add(PlayerTweens.FLIP, {
+            startDelay: 0,
+            duration: 750,
+            effects: [
+                {
+                    property: "rotation",
+                    start: 0,
+                    end: 2 * Math.PI,
+                    ease: EaseFunctionType.IN_OUT_QUAD
+                }
+            ]
+        })
 
         // Give the player a death animation
         this.player.tweens.add(PlayerTweens.DEATH, {
@@ -469,5 +483,9 @@ export default abstract class HW3Level extends Scene {
     // Get the key of the player's jump audio file
     public getJumpAudioKey(): string {
         return this.jumpAudioKey
+    }
+
+    public getDyingKey(): string {
+        return this.dyingKey
     }
 }
