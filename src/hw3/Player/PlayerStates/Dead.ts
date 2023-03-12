@@ -1,8 +1,12 @@
 import GameEvent from "../../../Wolfie2D/Events/GameEvent";
-import { PlayerTweens } from "../PlayerController";
+import { PlayerAnimations, PlayerTweens } from "../PlayerController";
 import PlayerState from "./PlayerState";
 
 import { GameEventType } from "../../../Wolfie2D/Events/GameEventType";
+import { AnimationState } from "../../../Wolfie2D/Rendering/Animations/AnimationTypes";
+
+//
+import { HW3Events } from "../../HW3Events";
 
 /**
  * The Dead state for the player's FSM AI. 
@@ -16,7 +20,11 @@ export default class Dead extends PlayerState {
         // sound is very low compared to menu music...
         this.emitter.fireEvent(GameEventType.PLAY_SOUND, {key: dyingSOUND, loop: false, holdReference: false});
 
-        this.owner.tweens.play(PlayerTweens.DEATH);
+        this.owner.animation.playIfNotAlready(PlayerAnimations.DYING, false);
+        this.owner.animation.queue(PlayerAnimations.DEAD, false, HW3Events.PLAYER_DEAD);
+
+        // throws an error since my death animation is only 1 frame
+        //this.owner.tweens.play(PlayerTweens.DEATH);
     }
 
     // Ignore all events from the rest of the game

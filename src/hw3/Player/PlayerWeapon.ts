@@ -4,7 +4,10 @@ import Color from "../../Wolfie2D/Utils/Color";
 import { EaseFunctionType } from "../../Wolfie2D/Utils/EaseFunctions";
 import RandUtils from "../../Wolfie2D/Utils/RandUtils";
 
- 
+import Vec2 from "../../Wolfie2D/DataTypes/Vec2";
+import Timer from "../../Wolfie2D/Timing/Timer";
+import { HW3PhysicsGroups } from "../HW3PhysicsGroups";
+
 
 /**
  * // TODO get the particles to move towards the mouse when the player attacks
@@ -13,6 +16,8 @@ import RandUtils from "../../Wolfie2D/Utils/RandUtils";
  * be spawned at the player's position and fired in the direction of the mouse's position.
  */
 export default class PlayerWeapon extends ParticleSystem {
+
+    private faceDirection: Vec2;
 
     public getPool(): Readonly<Array<Particle>> {
         return this.particlePool;
@@ -29,7 +34,8 @@ export default class PlayerWeapon extends ParticleSystem {
      */
     public setParticleAnimation(particle: Particle) {
         // Give the particle a random velocity.
-        particle.vel = RandUtils.randVec(100, 200, -32, 32);
+        let fact = 4; // larger factor = wider and farther
+        particle.vel = RandUtils.randVec(0, this.faceDirection.x*fact, 0, this.faceDirection.y*fact);
         particle.color = Color.RED;
 
         // Give the particle tweens
@@ -47,4 +53,22 @@ export default class PlayerWeapon extends ParticleSystem {
         });
     }
 
+    startSystem(time: number, mass?: number, startPoint?: Vec2, faceDir?: Vec2) {
+        this.faceDirection = faceDir.scale(100);
+        this.stopSystem();
+
+        this.systemLifetime = new Timer(time)
+
+        if (mass !== undefined) {
+            this.particleMass = mass;
+        }
+
+        if (startPoint !== undefined) {
+            this.sourcePoint = startPoint;
+        }
+
+        this.systemLifetime.start();
+        this.systemRunning = true;
+        this.particlesToRender = this.particlesPerFrame;
+    }
 }
