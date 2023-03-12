@@ -38,6 +38,9 @@ export default class PlayerWeapon extends ParticleSystem {
         particle.vel = RandUtils.randVec(0, this.faceDirection.x*fact, 0, this.faceDirection.y*fact);
         particle.color = Color.RED;
 
+        // took so long to realize i forgot this
+        particle.setGroup(HW3PhysicsGroups.PLAYER_WEAPON);
+
         // Give the particle tweens
         particle.tweens.add("active", {
             startDelay: 0,
