@@ -13,7 +13,8 @@ export default class Fall extends PlayerState {
 
         // If the player hits the ground, start idling and check if we should take damage
         if (this.owner.onGround) {
-            let damageLimit = 200
+            //console.log(this.parent.velocity.y);
+            let damageLimit = 240 // 1 block jump falls for no damage
             if (this.parent.velocity.y > damageLimit) {
                 this.parent.health -= Math.floor(this.parent.velocity.y / damageLimit);
                 this.owner.animation.playIfNotAlready(PlayerAnimations.TAKING_DAMAGE, false);

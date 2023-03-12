@@ -52,8 +52,8 @@ export default class PlayerWeapon extends ParticleSystem {
             ]
         });
     }
-
-    startSystem(time: number, mass?: number, startPoint?: Vec2, faceDir?: Vec2) {
+    
+    public startSystem(time: number, mass?: number, startPoint?: Vec2, faceDir?: Vec2) {
         this.faceDirection = faceDir.scale(100);
         this.stopSystem();
 
