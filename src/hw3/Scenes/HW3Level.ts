@@ -230,10 +230,8 @@ export default abstract class HW3Level extends Scene {
                     // If the tile is collideable -> check if this particle is colliding with the tile
                     if(tilemap.isTileCollidable(col, row) && this.particleHitTile(tilemap, particle, col, row)){
                         // TODO Destroy the tile
-                        if (tilemap.getTileAtRowCol(new Vec2(col, row)) !== 0) {
-                            tilemap.setTileAtRowCol(new Vec2(col, row), 0);
-                            this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: this.tileDestroyedAudioKey, loop: false, holdReference: false });
-                        }
+                        tilemap.setTileAtRowCol(new Vec2(col, row), 0);
+                        this.emitter.fireEvent(GameEventType.PLAY_SOUND, { key: this.tileDestroyedAudioKey, loop: false, holdReference: false });
                     }
                 }
             }
@@ -251,7 +249,10 @@ export default abstract class HW3Level extends Scene {
      */
     protected particleHitTile(tilemap: OrthogonalTilemap, particle: Particle, col: number, row: number): boolean {
         // TODO detect whether a particle hit a tile
-        return true;
+        if (particle.isColliding) {
+            return true;
+        }
+        return false;
     }
 
     /**

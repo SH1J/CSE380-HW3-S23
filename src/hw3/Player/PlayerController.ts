@@ -78,7 +78,6 @@ export default class PlayerController extends StateMachineAI {
     //
     protected isDead: boolean;
 
-    
     public initializeAI(owner: HW3AnimatedSprite, options: Record<string, any>){
         this.owner = owner;
 
@@ -125,7 +124,7 @@ export default class PlayerController extends StateMachineAI {
         // If the player hits the attack button and the weapon system isn't running, restart the system and fire!
         if (Input.isPressed(HW3Controls.ATTACK) && !this.weapon.isSystemRunning()) {
             // Start the particle system at the player's current position
-            this.weapon.startSystem(500, 0, this.owner.position, this.faceDir);
+            this.weapon.startSystem(750, 0, this.owner.position, this.faceDir);
 
             if (this.faceDir.x > 0) {
                 this.owner.animation.play(PlayerAnimations.ATTACK_RIGHT, false);
@@ -161,6 +160,6 @@ export default class PlayerController extends StateMachineAI {
         // When the health changes, fire an event up to the scene.
         this.emitter.fireEvent(HW3Events.HEALTH_CHANGE, {curhp: this.health, maxhp: this.maxHealth});
         // If the health hit 0, change the state of the player
-        if (this.health === 0) { this.changeState(PlayerStates.DEAD); }
+        //if (this.health === 0) { this.changeState(PlayerStates.DEAD); }
     }
 }

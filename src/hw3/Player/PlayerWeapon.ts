@@ -34,7 +34,7 @@ export default class PlayerWeapon extends ParticleSystem {
      */
     public setParticleAnimation(particle: Particle) {
         // Give the particle a random velocity.
-        let fact = 4; // larger factor = wider and farther
+        let fact = 2; // larger factor = wider and farther
         particle.vel = RandUtils.randVec(0, this.faceDirection.x*fact, 0, this.faceDirection.y*fact);
         particle.color = Color.RED;
 
